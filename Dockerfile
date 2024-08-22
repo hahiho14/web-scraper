@@ -1,10 +1,14 @@
 FROM python:3.11-slim
 
-WORKDIR /app
+WORKDIR /web-scraper
 
-COPY . /app
+COPY ./app /web-scraper/app
+COPY ./requirements.txt /web-scraper/requirements.txt
+COPY ./assessment2.py /web-scraper/assessment2.py
 
 RUN pip install --no-cache-dir -r requirements.txt
+
+ENV PYTHONPATH=/web-scraper/app
 
 EXPOSE 8000
 
