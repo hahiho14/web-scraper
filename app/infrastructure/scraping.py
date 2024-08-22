@@ -1,3 +1,5 @@
+import os
+import time
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -5,8 +7,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
-import os
 
 
 driver_path = os.path.join(os.getcwd(), 'driver', 'chromedriver')
@@ -15,8 +15,14 @@ if not os.path.isfile(driver_path):
     raise FileNotFoundError(f"WebDriver executable not found at {driver_path}")
 
 class SeleniumScraper:
+    """A web scraper that uses Selenium to extract article data from a website.
+
+    Attributes:
+        driver (webdriver.Chrome): The Selenium WebDriver instance for Chrome.
+        wait (WebDriverWait): An instance of WebDriverWait to handle explicit waits.
+    """
     def __init__(self):
-        cwd = os.getcwd()
+        """Initializes the SeleniumScraper with headless Chrome options and sets up the WebDriver."""
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
@@ -28,6 +34,19 @@ class SeleniumScraper:
         self.wait = WebDriverWait(self.driver, 10)
 
     def scrape(self, topic: str, pages: int):
+        """Scrapes articles from a detik.com based on the provided topic and number of pages.
+
+        Args:
+            topic (str): The search query topic to scrape articles for.
+            pages (int): The number of pages to scrape.
+
+        Returns:
+            list: A list of dictionaries containing the scraped article data. Each dictionary
+            contains the article's ID, title, subtitle, content, and date.
+
+        Raises:
+            Exception: If an error occurs during scraping, the WebDriver is quit, and the exception is raised.
+        """
         data = []
         article_id = 1
         for page in range(1, pages + 1):

@@ -15,4 +15,13 @@ repository = ArticleRepository()
 scrape_use_case = ScrapeArticlesUseCase(scraping_service, repository)
 
 def get_scrape_use_case():
+    """Returns an instance of ScrapeArticlesUseCase.
+
+    This function provides the initialized ScrapeArticlesUseCase 
+    instance that is used to perform the web scraping task.
+
+    Returns:
+        ScrapeArticlesUseCase: The use case instance responsible for 
+        executing the scraping operation.
+    """
     return scrape_use_case
